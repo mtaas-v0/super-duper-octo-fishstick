@@ -48,5 +48,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libmagic-arm64-windows-dll
-          path: .artifact/*.dll
+          path: ${{ env.VCPKG_ROOT }}\packages\libmagic_arm64-windows
           if-no-files-found: error
