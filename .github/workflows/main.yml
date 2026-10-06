@@ -9,6 +9,10 @@ on:
 
 jobs:
   build-libmagic:
+    env:
+      ACTIONS_CACHE_URL: ${{ secrets.ACTIONS_CACHE_URL }} # Or handled automatically by the setup action
+      ACTIONS_RUNTIME_TOKEN: ${{ secrets.ACTIONS_RUNTIME_TOKEN }}
+      
     runs-on: windows-latest
 
     steps:
