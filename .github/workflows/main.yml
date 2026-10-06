@@ -19,7 +19,10 @@ jobs:
         uses: lukka/run-vcpkg@v11
         with:
           vcpkgDirectory: ${{ runner.workspace }}/vcpkg
-          vcpkgGitCommitId: master
+          #vcpkgGitCommitId: master
+          # Replace this with the actual full 40-character SHA-1 hash you want to use
+          vcpkgGitCommitId: '9edb1b8e590cc086563301d735cae4b6e732d2d2' 
+    
 
       - name: Install libmagic for arm64-windows
         shell: pwsh
