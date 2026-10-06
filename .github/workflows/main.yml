@@ -1,0 +1,45 @@
+name: Build libmagic arm64-windows
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-libmagic:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgDirectory: ${{ runner.workspace }}/vcpkg
+          vcpkgGitCommitId: master
+
+      - name: Install libmagic for arm64-windows
+        shell: pwsh
+        run: |
+          & "${{ env.VCPKG_ROOT }}/vcpkg.exe" install libmagic:arm64-windows --triplet arm64-windows
+
+      - name: Find the built DLL
+        shell: pwsh
+        run: |
+          $dll = Get-ChildItem "${{ env.VCPKG_ROOT }}/installed/arm64-windows/bin" -Filter *.dll -Recurse | Select-Object -First 1
+          if (-not $dll) {
+            throw "No DLL was produced for libmagic:arm64-windows"
+          }
+
+          New-Item -ItemType Directory -Force -Path .artifact | Out-Null
+          Copy-Item $dll.FullName -Destination .artifact/
+
+      - name: Upload libmagic DLL as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: libmagic-arm64-windows-dll
+          path: .artifact/*.dll
+          if-no-files-found: error
