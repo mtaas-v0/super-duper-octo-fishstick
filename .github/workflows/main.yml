@@ -25,7 +25,7 @@ jobs:
           vcpkgDirectory: ${{ runner.workspace }}/vcpkg
           #vcpkgGitCommitId: master
           # Replace this with the actual full 40-character SHA-1 hash you want to use
-#          vcpkgGitCommitId: '9edb1b8e590cc086563301d735cae4b6e732d2d2' 
+          vcpkgGitCommitId: '0bc1a55f422ceb190877234b3ba88c372f04c485' 
     
 
       - name: Install libmagic for arm64-windows
